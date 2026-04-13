@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票分析報告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #888; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 { 
+            color: #4ecdc4; 
+            margin-bottom: 16px;
+            font-size: 1.3em;
+        }
+        .stock-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .stock-info .item { 
+            background: rgba(255,255,255,0.1); 
+            padding: 15px; 
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stock-info .label { color: #888; font-size: 0.85em; }
+        .stock-info .value { font-size: 1.4em; font-weight: bold; margin-top: 5px; }
+        .stock-info .value.up { color: #4ecdc4; }
+        .stock-info .value.down { color: #ff6b6b; }
+        .chart-container { height: 300px; margin-top: 20px; }
+        .conclusion { 
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: #000;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .conclusion h3 { margin-bottom: 10px; }
+        .conclusion .verdict { 
+            font-size: 1.5em; 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px; }
+        .tag { 
+            background: rgba(255,255,255,0.2); 
+            padding: 4px 12px; 
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        .table { width: 100%; border-collapse: collapse; }
+        .table th, .table td { 
+            padding: 12px; 
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .table th { color: #4ecdc4; }
+        .footer { text-align: center; padding: 30px; color: #666; }
+        @media (max-width: 600px) {
+            .stock-info { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>中碳 (1723.TW)</h1>
+            <p class="date">2026-04-13 12:25</p>
+        </div>
+
+        <div class="card">
+            <h2>📊 基本數據</h2>
+            <div class="stock-info">
+                <div class="item">
+                    <div class="label">股價</div>
+                    <div class="value">$78.1</div>
+                </div>
+                <div class="item">
+                    <div class="label">本益比</div>
+                    <div class="value">29.5</div>
+                </div>
+                <div class="item">
+                    <div class="label">ROE</div>
+                    <div class="value">7.68%</div>
+                </div>
+                <div class="item">
+                    <div class="label">營收增長</div>
+                    <div class="value ">-24.8%</div>
+                </div>
+                <div class="item">
+                    <div class="label">股息率</div>
+                    <div class="value">5.76%</div>
+                </div>
+                <div class="item">
+                    <div class="label">股價位階</div>
+                    <div class="value">43.4%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 Buffett 8問篩選</h2>
+            <table class="table">
+                <tr><th>問題</th><th>結果</th><th>紅旗</th></tr>
+                <tr><td>Circle of Competence</td><td>是</td><td>✅</td></tr><tr><td>Durability</td><td>存疑</td><td>❌</td></tr><tr><td>Moat</td><td>無</td><td>❌</td></tr><tr><td>Pricing Power</td><td>無</td><td>❌</td></tr><tr><td>Earnings Quality</td><td>普通</td><td>✅</td></tr><tr><td>Debt Safety</td><td>安全</td><td>✅</td></tr><tr><td>Management</td><td>正常</td><td>✅</td></tr><tr><td>Reasonable Price</td><td>否</td><td>❌</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>📈 股價走勢</h2>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🛡️ 護城河分析</h2>
+            <p>無護城河，大宗商品化學品，客戶轉換成本低。營收驟降 24.8% = 產業供需反轉訊號。</p>
+        </div>
+
+        <div class="card">
+            <h2>⚠️ 風險評估</h2>
+            <ul>
+                <li>營收崩跌可能持續</li><li>PE 29x 偏高，若獲利下滑會補跌</li><li>高股息可能因景氣下滑而取消</li>
+            </ul>
+        </div>
+
+        <div class="conclusion">
+            <h3>📋 結論</h3>
+            <div class="verdict">不買 / 放空評估</div>
+            <p>營收衰退 24.8% 是最大警訊，4 個紅旗不通過 Buffett 8問</p>
+            <div class="tags">
+                <span class="tag">買入價: $N/A</span>
+                <span class="tag">目標價: $N/A</span>
+                <span class="tag">風險: 高</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🍎 小蘋果股票分析報告 | 自動生成</p>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["3\u6708", "3\u6708\u4e2d", "3\u6708\u5e95", "4\u6708\u521d", "4\u6708\u4e2d"],
+                datasets: [{
+                    label: '股價',
+                    data: [70, 72, 75, 85, 78],
+                    borderColor: '#4ecdc4',
+                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
