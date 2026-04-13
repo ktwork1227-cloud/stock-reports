@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中碳 (1723.TW) 股票分析報告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 15px;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 5px; }
+        .header .subtitle { color: #888; font-size: 0.9em; }
+        
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 { 
+            color: #4ecdc4; 
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Price Info Grid */
+        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .price-item { 
+            background: rgba(255,255,255,0.08); 
+            padding: 12px; 
+            border-radius: 10px;
+            text-align: center;
+        }
+        .price-item .label { color: #888; font-size: 0.8em; }
+        .price-item .value { font-size: 1.3em; font-weight: bold; margin-top: 3px; }
+        .price-item .value.up { color: #4ecdc4; }
+        .price-item .value.down { color: #ff6b6b; }
+        
+        /* Tables */
+        .table-container { overflow-x: auto; }
+        .table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        .table th, .table td { 
+            padding: 10px 8px; 
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .table th { color: #4ecdc4; background: rgba(255,255,255,0.05); }
+        .table td:first-child, .table th:first-child { text-align: left; }
+        
+        /* Charts */
+        .chart-container { height: 280px; margin-top: 15px; }
+        .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        /* Section Tags */
+        .year-tag {
+            display: inline-block;
+            background: #4ecdc4;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .year-tag.current { background: #ff6b6b; color: #fff; }
+        .year-tag.last { background: #f9a825; color: #000; }
+        .year-tag.past { background: #7e57c2; color: #fff; }
+        .year-tag.old { background: #78909c; color: #000; }
+        
+        /* Conclusion Box */
+        .conclusion { 
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: #000;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .conclusion h3 { margin-bottom: 10px; }
+        .conclusion .verdict { 
+            font-size: 1.6em; 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        /* Risk Tags */
+        .risk-list { list-style: none; padding: 0; }
+        .risk-list li { 
+            padding: 8px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .risk-list li:last-child { border-bottom: none; }
+        .risk-icon { color: #ff6b6b; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 25px; color: #666; font-size: 0.85em; }
+        
+        /* Responsive */
+        @media (max-width: 700px) {
+            .price-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.6em; }
+            .table { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>中碳 (1723.TW)</h1>
+            <p class="subtitle">股票分析報告 | 2026-04-14 07:35:06 | 資料來源: Yahoo Finance</p>
+        </div>
+
+        <!-- 1. 最新股價與成交量 -->
+        <div class="card">
+            <h2>📊 最新報價</h2>
+            <div class="price-grid">
+                <div class="price-item">
+                    <div class="label">現在股價</div>
+                    <div class="value up">78.10 元</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">漲跌幅</div>
+                    <div class="value up">+1.17%</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">成交量</div>
+                    <div class="value">1,008,000 股</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">5日均量</div>
+                    <div class="value">3,200,000 股</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">10日均量</div>
+                    <div class="value">2,800,000 股</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">20日均量</div>
+                    <div class="value">2,500,000 股</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. K線圖 -->
+        <div class="card">
+            <h2>📈 股價走勢（近半年）</h2>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 3. 成交量圖 -->
+        <div class="card">
+            <h2>📉 成交量與均量</h2>
+            <div class="chart-container">
+                <canvas id="volumeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 4. 月營收 -->
+        <div class="card">
+            <h2>💰 月營收分析</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>年度</th>
+                            <th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th>
+                            <th>7月</th><th>8月</th><th>9月</th><th>10月</th><th>11月</th><th>12月</th>
+                            <th>年增率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2026 (今年)</td><td>1.2M</td><td>1.4M</td><td>1.1M</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-74.1%</td></tr><tr><td>2025 (去年)</td><td>1.1M</td><td>1.2M</td><td>1.1M</td><td>1.1M</td><td>1.2M</td><td>1.3M</td><td>1.2M</td><td>1.1M</td><td>1.1M</td><td>1.1M</td><td>1.2M</td><td>1.3M</td><td>-</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. EPS 比較 -->
+        <div class="card">
+            <h2>💵 EPS 每股盈餘比較</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>年度</th>
+                            <th>EPS (元)</th>
+                            <th>同比</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+            <td><span class="year-tag current">2026 今年</span></td>
+            <td>2.65</td>
+            <td>-</td>
+            <td>-</td>
+        </tr><tr>
+            <td><span class="year-tag last">2025 去年</span></td>
+            <td>3.12</td>
+            <td>+17.7%</td>
+            <td>已公布</td>
+        </tr><tr>
+            <td><span class="year-tag past">2024 前年</span></td>
+            <td>2.85</td>
+            <td>-8.7%</td>
+            <td>已公布</td>
+        </tr><tr>
+            <td><span class="year-tag old">2023 大前年</span></td>
+            <td>2.45</td>
+            <td>-14.0%</td>
+            <td>已公布</td>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. 歷史高低點 -->
+        <div class="card">
+            <h2>📍 歷史股價高低點</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>年度</th>
+                            <th>最高價</th>
+                            <th>最高日期</th>
+                            <th>最低價</th>
+                            <th>最低日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+            <td><span class="year-tag current">2026 今年</span></td>
+            <td>93.9</td>
+            <td>2026-03-31</td>
+            <td>66.0</td>
+            <td>2026-01-15</td>
+        </tr><tr>
+            <td><span class="year-tag last">2025 去年</span></td>
+            <td>89.5</td>
+            <td>2025-12-15</td>
+            <td>52.3</td>
+            <td>2025-01-20</td>
+        </tr><tr>
+            <td><span class="year-tag past">2024 前年</span></td>
+            <td>78.2</td>
+            <td>2024-11-10</td>
+            <td>45.6</td>
+            <td>2024-02-15</td>
+        </tr><tr>
+            <td><span class="year-tag old">2023 大前年</span></td>
+            <td>65.4</td>
+            <td>2023-10-20</td>
+            <td>38.9</td>
+            <td>2023-01-10</td>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 7. 歷史 PE -->
+        <div class="card">
+            <h2>📊 歷史本益比</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>年度</th>
+                            <th>高點 PE</th>
+                            <th>低點 PE</th>
+                            <th>說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+            <td><span class="year-tag last">2025 去年</span></td>
+            <td>28.7</td>
+            <td>16.8</td>
+            <td>股價高點/低點時的 PE</td>
+        </tr><tr>
+            <td><span class="year-tag past">2024 前年</span></td>
+            <td>27.4</td>
+            <td>16.0</td>
+            <td>股價高點/低點時的 PE</td>
+        </tr><tr>
+            <td><span class="year-tag old">2023 大前年</span></td>
+            <td>26.7</td>
+            <td>15.9</td>
+            <td>股價高點/低點時的 PE</td>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. 基本面數據 -->
+        <div class="card">
+            <h2>📋 基本面數據</h2>
+            <div class="price-grid">
+                <div class="price-item">
+                    <div class="label">本益比 (PE)</div>
+                    <div class="value">29.5</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">ROE</div>
+                    <div class="value">7.68%</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">ROA</div>
+                    <div class="value">2.92%</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">營收增長</div>
+                    <div class="value down">-2480.0%%</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">營業利益率</div>
+                    <div class="value">7.03%</div>
+                </div>
+                <div class="price-item">
+                    <div class="label">股息率</div>
+                    <div class="value">5.76%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. 產業概況 -->
+        <div class="card">
+            <h2>🏭 產業概況</h2>
+            <p><strong>產業別：</strong>化學製品</p>
+            <p><strong>類別：</strong>原材料</p>
+            <p style="margin-top: 10px; color: #aaa;">化學製品 行業，目前景氣面臨挑戰</p>
+        </div>
+
+        <!-- 10. 風險明細 -->
+        <div class="card">
+            <h2>⚠️ 風險評估</h2>
+            <ul class="risk-list">
+                <li><span class="risk-icon">⚠️</span> 營收衰退 24.8%，可能持續下滑</li><li><span class="risk-icon">⚠️</span> PE 29.5 倍偏高，景氣反轉會補跌</li><li><span class="risk-icon">⚠️</span> 無護城河，屬大宗商品</li><li><span class="risk-icon">⚠️</span> 高股息可能因景氣下滑取消</li>
+            </ul>
+        </div>
+
+        <!-- 11. 同業比較 (預留) -->
+        <div class="card">
+            <h2>🔄 同業比較</h2>
+            <p style="color: #888;">同業比較數據待整合...</p>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="conclusion">
+            <h3>📋 分析結論</h3>
+            <div class="verdict">觀望</div>
+            <p></p>
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">💰 買入價: $N/A</span>
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">🎯 目標價: $N/A</span>
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">⚠️ 風險: 中</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🍎 小蘋果股票分析報告 | 自動生成</p>
+            <p>📁 原始數據: <a href="#" style="color: #4ecdc4;">raw data</a></p>
+        </div>
+    </div>
+
+    <script>
+        // K線圖
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: ["03-10", "03-11", "03-12", "03-13", "03-16"],
+                datasets: [{
+                    label: '股價',
+                    data: [68.6, 69.7, 70.3, 76.1, 76.8],
+                    borderColor: '#4ecdc4',
+                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // 成交量圖
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ["03-10", "03-11", "03-12", "03-13", "03-16"],
+                datasets: [
+                    {
+                        label: '成交量',
+                        data: [430000, 327000, 437000, 3688000, 2179000],
+                        backgroundColor: 'rgba(78, 205, 196, 0.5)',
+                    },
+                    {
+                        type: 'line',
+                        label: '60日均量',
+                        data: [2200000, 2200000, 2200000, 2200000, 2200000],
+                        borderColor: '#ff6b6b',
+                        borderDash: [5, 5],
+                        tension: 0.3,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: true, labels: { color: '#fff' } } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
