@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研華 (2395.TW) 股票分析報告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 15px;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 5px; }
+        .header .subtitle { color: #888; font-size: 0.9em; }
+        
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 { 
+            color: #4ecdc4; 
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Price Info Grid */
+        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .price-item { 
+            background: rgba(255,255,255,0.08); 
+            padding: 12px; 
+            border-radius: 10px;
+            text-align: center;
+        }
+        .price-item .label { color: #888; font-size: 0.8em; }
+        .price-item .value { font-size: 1.3em; font-weight: bold; margin-top: 3px; }
+        .price-item .value.up { color: #4ecdc4; }
+        .price-item .value.down { color: #ff6b6b; }
+        
+        /* Tables */
+        .table-container { overflow-x: auto; }
+        .table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        .table th, .table td { 
+            padding: 10px 8px; 
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .table th { color: #4ecdc4; background: rgba(255,255,255,0.05); }
+        .table td:first-child, .table th:first-child { text-align: left; }
+        
+        /* Charts */
+        .chart-container { height: 280px; margin-top: 15px; }
+        .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        /* Section Tags */
+        .year-tag {
+            display: inline-block;
+            background: #4ecdc4;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .year-tag.current { background: #ff6b6b; color: #fff; }
+        .year-tag.last { background: #f9a825; color: #000; }
+        .year-tag.past { background: #7e57c2; color: #fff; }
+        .year-tag.old { background: #78909c; color: #000; }
+        
+        /* Conclusion Box */
+        .conclusion { 
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: #000;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .conclusion h3 { margin-bottom: 10px; }
+        .conclusion .verdict { 
+            font-size: 1.6em; 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        /* Risk Tags */
+        .risk-list { list-style: none; padding: 0; }
+        .risk-list li { 
+            padding: 8px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .risk-list li:last-child { border-bottom: none; }
+        .risk-icon { color: #ff6b6b; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 25px; color: #666; font-size: 0.85em; }
+        
+        /* Responsive */
+        @media (max-width: 700px) {
+            .price-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.6em; }
+            .table { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>研華 (2395.TW)</h1>
+            <p class="subtitle">股票分析報告 | 2026-04-14 17:01 | 資料來源: Yahoo Finance</p>
+        </div>
+
+        <!-- 1. 最新股價與成交量 -->
+        
+
+        <!-- Conclusion -->
+        <div class="conclusion">
+            <h3>📋 分析結論</h3>
+            <div class="verdict">觀望</div>
+            <p>目前 PE 位於歷史區間中高位，建議等待回調。</p>
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">💰 買入價: 1800</span>
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">🎯 目標價: 2500</span>
+                <span style="background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;">⚠️ 風險: 中</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🍎 小蘋果股票分析報告 | 自動生成</p>
+            <p>📁 原始數據: <a href="https://ktwork1227-cloud.github.io/stock-reports/advantech_raw_170133.json" style="color: #4ecdc4;">advantech_raw_170133.json</a></p>
+        </div>
+    </div>
+
+    <script>
+        // K線圖
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: ["01-07", "01-08", "01-09", "01-12", "01-13", "01-14", "01-15", "01-16", "01-19", "01-20", "01-21", "01-22", "01-23", "01-26", "01-27", "01-28", "01-29", "01-30", "02-02", "02-03", "02-04", "02-05", "02-06", "02-09", "02-10", "02-11", "02-23", "02-24", "02-25", "02-26", "03-02", "03-03", "03-04", "03-05", "03-06", "03-09", "03-10", "03-11", "03-12", "03-13", "03-16", "03-17", "03-18", "03-19", "03-20", "03-23", "03-24", "03-25", "03-26", "03-27", "03-30", "03-31", "04-01", "04-02", "04-07", "04-08", "04-09", "04-10", "04-13", "04-14"],
+                datasets: [{
+                    label: '股價',
+                    data: [288.5, 285.5, 288.5, 288.0, 287.0, 292.5, 287.5, 287.5, 287.0, 280.0, 275.0, 285.5, 288.0, 288.5, 290.5, 298.5, 305.0, 299.5, 291.5, 290.0, 287.5, 287.5, 287.5, 291.0, 297.5, 305.0, 315.0, 324.0, 333.0, 336.5, 336.5, 330.0, 311.5, 342.5, 375.0, 347.0, 345.5, 346.0, 345.0, 342.5, 340.0, 348.0, 349.0, 342.0, 344.0, 330.0, 330.0, 333.5, 339.0, 332.5, 321.5, 318.5, 331.0, 323.5, 322.5, 348.5, 348.0, 346.0, 342.5, 344.0],
+                    borderColor: '#4ecdc4',
+                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // 成交量圖
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ["01-07", "01-08", "01-09", "01-12", "01-13", "01-14", "01-15", "01-16", "01-19", "01-20", "01-21", "01-22", "01-23", "01-26", "01-27", "01-28", "01-29", "01-30", "02-02", "02-03", "02-04", "02-05", "02-06", "02-09", "02-10", "02-11", "02-23", "02-24", "02-25", "02-26", "03-02", "03-03", "03-04", "03-05", "03-06", "03-09", "03-10", "03-11", "03-12", "03-13", "03-16", "03-17", "03-18", "03-19", "03-20", "03-23", "03-24", "03-25", "03-26", "03-27", "03-30", "03-31", "04-01", "04-02", "04-07", "04-08", "04-09", "04-10", "04-13", "04-14"],
+                datasets: [
+                    {
+                        label: '成交量',
+                        data: [1510315, 1388109, 1775549, 1330246, 1717450, 1817025, 2157091, 1703675, 2079657, 3486384, 3187631, 2156038, 2155831, 1448133, 1766578, 3295870, 5371179, 5024830, 3937216, 2414907, 1450474, 1325442, 1706476, 2397381, 2298698, 4158801, 5361079, 4716365, 4988133, 5612505, 5610472, 4126562, 4227254, 6560205, 19650666, 8175020, 6814809, 3475370, 2640972, 2181081, 2798412, 2412146, 2370683, 1726960, 4042266, 2506309, 1548815, 1458137, 3064529, 1673008, 2109703, 3987438, 1893704, 1977533, 1294226, 3399281, 2730479, 2518507, 2003492, 2410402],
+                        backgroundColor: 'rgba(78, 205, 196, 0.5)',
+                    },
+                    {
+                        type: 'line',
+                        label: '60日均量',
+                        data: [1749478, 1735571, 1725166, 1719835, 1720016, 1729489, 1743737, 1752498, 1750380, 1768886, 1818066, 1842831, 1838035, 1851368, 1850206, 1813523, 1832989, 1882315, 1933122, 1963024, 1964243, 1966267, 1964314, 1971444, 1976419, 1983482, 2013623, 2052581, 2085573, 2122782, 2164350, 2166731, 2199384, 2240247, 2315879, 2619040, 2728587, 2820677, 2859376, 2888398, 2901826, 2933356, 2949974, 2965197, 2970387, 3011640, 3026148, 3010373, 3008300, 3037014, 3023783, 3044836, 3092371, 3104163, 3126749, 3138945, 3180210, 3211951, 3228182, 3238049],
+                        borderColor: '#ff6b6b',
+                        borderDash: [5, 5],
+                        tension: 0.3,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: true, labels: { color: '#fff' } } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
